@@ -1,0 +1,10 @@
+Personal TODO — this week
+
+[ ] Review Bruno's OAuth spike PR
+[ ] Write unit tests for the search ranking module
+[ ] Update staging environment variables (Redis password rotated)
+[ ] Reply to Carlos about the API rate limits question
+[ ] Book team offsite venue before the end of month
+[ ] Read the Meilisearch 1.8 release notes
+[x] Set up local docker-compose dev environment
+[x] Onboard new contractor (Dani) to the codebase
