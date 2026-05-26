@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 import mcp.types as types
 
 from .store import DocumentStore, DocumentNotFoundError
@@ -9,7 +10,18 @@ from .store import DocumentStore, DocumentNotFoundError
 DOCS_DIR = Path(os.environ.get("DOCS_DIR", "/app/docs"))
 
 store = DocumentStore(DOCS_DIR)
-mcp = FastMCP("mcp-doc-server")
+_port = int(os.environ.get("PORT", "8000"))
+
+mcp = FastMCP(
+    "mcp-doc-server",
+    host="0.0.0.0",
+    port=_port,
+    transport_security=TransportSecuritySettings(
+        # Allow connections from localhost (inspector browser) and
+        # from the docker-compose network (cli-chat container)
+        allowed_hosts=["127.0.0.1:*", "localhost:*", "[::1]:*", "mcp-server:*"],
+    ),
+)
 
 
 # ---------------------------------------------------------------------------

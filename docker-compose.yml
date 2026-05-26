@@ -11,7 +11,8 @@ services:
       # Also exposed to host so the Inspector UI (running in browser) can reach it
       - "8000:8000"
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/mcp')"]
+      # 406 is the correct MCP response to a plain GET — check TCP instead
+      test: ["CMD", "python", "-c", "import socket; s=socket.socket(); s.settimeout(2); s.connect(('localhost',8000)); s.close()"]
       interval: 5s
       timeout: 3s
       retries: 10
